@@ -5,7 +5,8 @@ class ProfilePageM3 extends StatelessWidget {
 
   // Fonction helper pour construire une "chip" de statistique
   Widget _buildStatChip(String value, String label, ColorScheme colorScheme) {
-    return Expanded( // NOUVEAU: Rend la chip expansive
+    return Expanded(
+      // NOUVEAU: Rend la chip expansive
       child: Container(
         // Padding ajusté
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -41,7 +42,7 @@ class ProfilePageM3 extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Mon Profil'),
@@ -55,13 +56,13 @@ class ProfilePageM3 extends StatelessWidget {
           ),
         ],
       ),
-      
+
       // SUPPRESSION DE CENTER ET CONSTRAINED BOX
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           // Centrage des éléments (Photo, Nom, Titre)
-          crossAxisAlignment: CrossAxisAlignment.center, 
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Étape 1: Photo de profil avec badge (Identique)
             Stack(
@@ -73,10 +74,7 @@ class ProfilePageM3 extends StatelessWidget {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     gradient: LinearGradient(
-                      colors: [
-                        colorScheme.primary,
-                        colorScheme.secondary,
-                      ],
+                      colors: [colorScheme.primary, colorScheme.secondary],
                     ),
                   ),
                   child: const CircleAvatar(
@@ -89,10 +87,7 @@ class ProfilePageM3 extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: colorScheme.primary,
                     shape: BoxShape.circle,
-                    border: Border.all(
-                      color: colorScheme.surface,
-                      width: 2,
-                    ),
+                    border: Border.all(color: colorScheme.surface, width: 2),
                   ),
                   child: Icon(
                     Icons.check,
@@ -106,7 +101,7 @@ class ProfilePageM3 extends StatelessWidget {
 
             // Étape 2: Nom et titre (Identique, le centrage est géré par la Column)
             Text(
-              'Oussama Ben Azine',
+              'Helmi Lajnef',
               style: textTheme.headlineMedium?.copyWith(
                 fontWeight: FontWeight.bold,
                 color: colorScheme.onSurface,
@@ -114,16 +109,16 @@ class ProfilePageM3 extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'Graphic & UI/UX Designer',
+              'Videographer & CGI Artist',
               style: textTheme.bodyLarge?.copyWith(
                 color: colorScheme.onSurfaceVariant,
               ),
             ),
             const SizedBox(height: 32),
-            
+
             // Étape 3: Statistiques (Remplacé par Row + Expanded)
             // NOUVEAU: Row force les enfants (chips) à prendre toute la largeur
-            Row( 
+            Row(
               children: [
                 _buildStatChip('128', 'Abonnés', colorScheme),
                 const SizedBox(width: 12), // Espacement entre les chips
@@ -134,10 +129,11 @@ class ProfilePageM3 extends StatelessWidget {
             ),
             const SizedBox(height: 32),
 
-            // Étape 4: Section "À propos" 
+            // Étape 4: Section "À propos"
             // NOUVEAU: Le Card prendra automatiquement 100% de la largeur
             // du SingleChildScrollView car il n'est pas contraint.
-            Align( // Utiliser Align pour forcer la Card à prendre 100% de la largeur
+            Align(
+              // Utiliser Align pour forcer la Card à prendre 100% de la largeur
               alignment: Alignment.center,
               child: Card(
                 elevation: 0,
@@ -145,7 +141,7 @@ class ProfilePageM3 extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(20),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start, 
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         children: [
@@ -183,8 +179,7 @@ class ProfilePageM3 extends StatelessWidget {
         icon: const Icon(Icons.edit),
         label: const Text('Modifier le profil'),
       ),
-      floatingActionButtonLocation:
-          FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
