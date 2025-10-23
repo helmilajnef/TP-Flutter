@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'atelier1.dart'; 
-import 'atelier2.dart'; 
+import 'atelier1.dart';
+import 'atelier2.dart';
+import 'atelier3.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,14 +15,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Material 3',
       theme: ThemeData(useMaterial3: true),
-      debugShowCheckedModeBanner: false, // <-- NOUVEAU: Supprime le bandeau DEBUG
-      
-      // DÉFINITION DES ROUTES
-      initialRoute: '/profile', // Démarrage sur la page de profil
-      routes: {
-        '/profile': (context) => const ProfilePageM3(),
-        '/products': (context) => const ProductListPageM3(),
-      },
+      // Replace ProductListPageM3 with a widget that exists in your imports
+      home: const Atelier1(), // Assuming Atelier1 is your main page widget
     );
   }
 }
