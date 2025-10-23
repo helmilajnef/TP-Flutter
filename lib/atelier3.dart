@@ -30,7 +30,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) {
                   return Container(
-                    color: colorScheme.surfaceVariant,
+                    color: colorScheme.surfaceContainerHighest,
                     child: Icon(
                       Icons.shopping_bag,
                       color: colorScheme.onSurfaceVariant,
@@ -46,7 +46,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 icon: Container(
                   padding: const EdgeInsets.all(6),
                   decoration: BoxDecoration(
-                    color: colorScheme.surface.withOpacity(0.8),
+                    color: colorScheme.surface.withAlpha((0.8 * 255).round()),
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
@@ -183,7 +183,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         decoration: BoxDecoration(
           color: colorScheme.surface,
           border: Border(
-            top: BorderSide(color: colorScheme.outline.withOpacity(0.2)),
+            top: BorderSide(
+              color: colorScheme.outline.withAlpha((0.2 * 255).round()),
+            ),
           ),
         ),
         child: Row(
