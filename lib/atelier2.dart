@@ -249,6 +249,12 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   final ValueNotifier<int> _quantity = ValueNotifier<int>(1);
 
   @override
+  void dispose() {
+    _quantity.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;

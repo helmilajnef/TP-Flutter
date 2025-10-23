@@ -1,11 +1,10 @@
-<<<<<<< HEAD
 name: flutter_application_1
 description: "A new Flutter project."
 publish_to: 'none'
 version: 0.1.0
 
 environment:
-  sdk: ^3.7.0
+  sdk: ">=3.7.0 <4.0.0"
 
 dependencies:
   flutter:
@@ -15,29 +14,9 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
-assets:
-  - images/profile_picture.png
+
 flutter:
   uses-material-design: true
-=======
-name: flutter_application_1
-description: "A new Flutter project."
-publish_to: 'none'
-version: 0.1.0
+  assets:
+    - assets/images/profile_picture.png
 
-environment:
-  sdk: ^3.7.0
-
-dependencies:
-  flutter:
-    sdk: flutter
-
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  flutter_lints: ^5.0.0
-assets:
-  - images/profile_picture.png
-flutter:
-  uses-material-design: true
->>>>>>> 9e37280b502cdcc87a57ef6a79dc486d0d7f9628
