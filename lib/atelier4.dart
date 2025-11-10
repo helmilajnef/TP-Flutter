@@ -1,6 +1,8 @@
-/*import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
+// ============================
 // Modèle de données
+// ============================
 class Product {
   final String name;
   final double price;
@@ -17,6 +19,9 @@ class Product {
   });
 }
 
+// ============================
+// Page Liste des Produits
+// ============================
 class ProductListPageM3 extends StatelessWidget {
   const ProductListPageM3({super.key});
 
@@ -24,27 +29,27 @@ class ProductListPageM3 extends StatelessWidget {
     Product(
       'iPhone 15',
       999,
-      'https://picsum.photos/200/300',
+      'assets/images/iphone-15.jpg',
       isNew: true,
       rating: 4.5,
     ),
     Product(
       'Samsung Galaxy',
       799,
-      'https://picsum.photos/201/300',
+      'assets/images/samsung.jpg',
       isNew: false,
       rating: 4.2,
     ),
     Product(
       'Google Pixel',
       699,
-      'https://picsum.photos/202/300',
+      'assets/images/google.jpg',
       isNew: true,
       rating: 4.7,
     ),
   ];
 
-  // Fonction helper pour construire une carte produit
+  // Construction d'une carte produit
   Widget _buildProductCard(Product product, BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
@@ -57,7 +62,7 @@ class ProductListPageM3 extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Image du produit
+            // Image du produit avec badge
             Stack(
               children: [
                 Container(
@@ -69,32 +74,9 @@ class ProductListPageM3 extends StatelessWidget {
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
-                    child: Image.network(
-                      product.image,
-                      fit: BoxFit.cover,
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Center(
-                          child: CircularProgressIndicator(
-                            value:
-                                loadingProgress.expectedTotalBytes != null
-                                    ? loadingProgress.cumulativeBytesLoaded /
-                                        loadingProgress.expectedTotalBytes!
-                                    : null,
-                          ),
-                        );
-                      },
-                      errorBuilder: (context, error, stackTrace) {
-                        return Icon(
-                          Icons.shopping_bag,
-                          color: colorScheme.onSurfaceVariant,
-                          size: 40,
-                        );
-                      },
-                    ),
+                    child: Image.asset(product.image, fit: BoxFit.cover),
                   ),
                 ),
-                // Badge "Nouveau" en haut à droite de l'image
                 if (product.isNew)
                   Positioned(
                     top: 4,
@@ -122,12 +104,11 @@ class ProductListPageM3 extends StatelessWidget {
             ),
             const SizedBox(width: 16),
 
-            // Informations du produit
+            // Infos du produit
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Nom du produit
                   Text(
                     product.name,
                     style: const TextStyle(
@@ -137,10 +118,10 @@ class ProductListPageM3 extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
 
-                  // Rating avec étoiles
+                  // Rating
                   Row(
                     children: [
-                      Icon(Icons.star, color: Colors.amber, size: 16),
+                      const Icon(Icons.star, color: Colors.amber, size: 16),
                       const SizedBox(width: 4),
                       Text(
                         product.rating.toString(),
@@ -166,10 +147,9 @@ class ProductListPageM3 extends StatelessWidget {
               ),
             ),
 
-            // Bouton d'ajout au panier
+            // Bouton +
             Column(
               children: [
-                // Bouton "+" avec compteur
                 Container(
                   decoration: BoxDecoration(
                     color: colorScheme.primary,
@@ -177,7 +157,7 @@ class ProductListPageM3 extends StatelessWidget {
                   ),
                   child: IconButton(
                     onPressed: () {
-                      // Navigation vers la page de détail du produit
+                      // Navigation vers la page de détail
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -199,7 +179,6 @@ class ProductListPageM3 extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 4),
-                // Texte indicatif (optionnel)
                 Text(
                   'Ajouter',
                   style: TextStyle(
@@ -215,6 +194,9 @@ class ProductListPageM3 extends StatelessWidget {
     );
   }
 
+  // ============================
+  // BUILD PRINCIPAL
+  // ============================
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -236,6 +218,9 @@ class ProductListPageM3 extends StatelessWidget {
   }
 }
 
+// ============================
+// Page Détail Produit
+// ============================
 class ProductDetailPage extends StatefulWidget {
   final Product product;
 
@@ -262,24 +247,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          // Étape 1: SliverAppBar
+          // SliverAppBar avec image
           SliverAppBar(
             expandedHeight: 300,
             flexibleSpace: FlexibleSpaceBar(
-              background: Image.network(
-                widget.product.image,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    color: colorScheme.surfaceContainerHighest,
-                    child: Icon(
-                      Icons.shopping_bag,
-                      color: colorScheme.onSurfaceVariant,
-                      size: 60,
-                    ),
-                  );
-                },
-              ),
+              background: Image.asset(widget.product.image, fit: BoxFit.cover),
             ),
             pinned: true,
             actions: [
@@ -300,14 +272,14 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             ],
           ),
 
-          // Étape 2: Contenu détaillé
+          // Contenu principal
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Nom et prix
+                  // Nom + Prix
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -328,7 +300,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   ),
                   const SizedBox(height: 8),
 
-                  // Indicateur de vitesse (exemple)
                   Text(
                     '+ 0.0 (128 m/s)',
                     style: textTheme.bodyMedium?.copyWith(
@@ -337,7 +308,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   ),
                   const SizedBox(height: 24),
 
-                  // Section Description
                   Text(
                     'Description',
                     style: textTheme.titleLarge?.copyWith(
@@ -354,7 +324,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   ),
                   const SizedBox(height: 24),
 
-                  // Étape 3: Sélecteur de quantité
                   Text(
                     'Quantité',
                     style: textTheme.titleLarge?.copyWith(
@@ -370,7 +339,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        // Bouton -
                         IconButton(
                           onPressed: () {
                             if (_quantity.value > 1) {
@@ -382,8 +350,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                             color: colorScheme.onSurface,
                           ),
                         ),
-
-                        // Quantité
                         ValueListenableBuilder<int>(
                           valueListenable: _quantity,
                           builder: (context, quantity, child) {
@@ -399,8 +365,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                             );
                           },
                         ),
-
-                        // Bouton +
                         IconButton(
                           onPressed: () {
                             _quantity.value++;
@@ -410,7 +374,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 100), // Espace pour le bouton fixe
+                  const SizedBox(height: 100),
                 ],
               ),
             ),
@@ -418,7 +382,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         ],
       ),
 
-      // Étape 4: Bouton fixe en bas
+      // Bouton en bas
       bottomNavigationBar: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
@@ -431,7 +395,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         ),
         child: Row(
           children: [
-            // Prix total
             ValueListenableBuilder<int>(
               valueListenable: _quantity,
               builder: (context, quantity, child) {
@@ -449,7 +412,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             Expanded(
               child: FilledButton(
                 onPressed: () {
-                  // Action d'ajout au panier
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('${widget.product.name} ajouté au panier'),
@@ -467,4 +429,16 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       ),
     );
   }
+}
+
+// ============================
+// MAIN (pour tester directement)
+// ============================
+void main() {
+  runApp(
+    const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: ProductListPageM3(),
+    ),
+  );
 }

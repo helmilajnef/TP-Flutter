@@ -79,9 +79,7 @@ class ProfilePageM3 extends StatelessWidget {
                   ),
                   child: const CircleAvatar(
                     radius: 56,
-                    backgroundImage: AssetImage(
-                      'assets/images/profile_picture.png',
-                    ),
+                    backgroundImage: AssetImage('assets/images/hld.jpg'),
                   ),
                 ),
                 Container(
