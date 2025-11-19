@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'atelier5.dart'; // Pour CartManager et ProductListPageM3
 
 class ProfilePageM3 extends StatelessWidget {
-  final CartManager cartManager;
+  const ProfilePageM3({super.key});
 
-  const ProfilePageM3({super.key, required this.cartManager});
-
+  // Fonction helper pour construire une "chip" de statistique
   Widget _buildStatChip(String value, String label, ColorScheme colorScheme) {
     return Expanded(
+      // NOUVEAU: Rend la chip expansive
       child: Container(
+        // Padding ajusté
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
           color: colorScheme.surfaceContainerHighest,
@@ -47,40 +47,24 @@ class ProfilePageM3 extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Mon Profil'),
         actions: [
-          Stack(
-            children: [
-              IconButton(
-                icon: const Icon(Icons.shopping_bag_outlined),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/products');
-                },
-              ),
-              if (cartManager.totalItems > 0)
-                Positioned(
-                  right: 8,
-                  top: 8,
-                  child: Container(
-                    padding: const EdgeInsets.all(4),
-                    decoration: const BoxDecoration(
-                      color: Colors.red,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Text(
-                      '${cartManager.totalItems}',
-                      style: const TextStyle(color: Colors.white, fontSize: 10),
-                    ),
-                  ),
-                ),
-            ],
+          IconButton(
+            icon: const Icon(Icons.shopping_bag_outlined),
+            onPressed: () {
+              Navigator.pushReplacementNamed(context, '/products');
+            },
+            tooltip: 'Voir les produits',
           ),
         ],
       ),
+
+      // SUPPRESSION DE CENTER ET CONSTRAINED BOX
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
+          // Centrage des éléments (Photo, Nom, Titre)
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // PHOTO
+            // Étape 1: Photo de profil avec badge (Identique)
             Stack(
               alignment: Alignment.bottomRight,
               children: [
@@ -95,7 +79,7 @@ class ProfilePageM3 extends StatelessWidget {
                   ),
                   child: const CircleAvatar(
                     radius: 56,
-                    backgroundImage: AssetImage('assets/images/hld.jpg'),
+                    backgroundImage: AssetImage('images/profile_picture.png'),
                   ),
                 ),
                 Container(
@@ -114,10 +98,13 @@ class ProfilePageM3 extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 24),
+
+            // Étape 2: Nom et titre (Identique, le centrage est géré par la Column)
             Text(
               'Helmi Lajnef',
               style: textTheme.headlineMedium?.copyWith(
                 fontWeight: FontWeight.bold,
+                color: colorScheme.onSurface,
               ),
             ),
             const SizedBox(height: 8),
@@ -128,54 +115,69 @@ class ProfilePageM3 extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 32),
+
+            // Étape 3: Statistiques (Remplacé par Row + Expanded)
+            // NOUVEAU: Row force les enfants (chips) à prendre toute la largeur
             Row(
               children: [
                 _buildStatChip('128', 'Abonnés', colorScheme),
-                const SizedBox(width: 12),
+                const SizedBox(width: 12), // Espacement entre les chips
                 _buildStatChip('56', 'Projets', colorScheme),
                 const SizedBox(width: 12),
                 _buildStatChip('2 ans', 'Expérience', colorScheme),
               ],
             ),
             const SizedBox(height: 32),
-            Card(
-              color: colorScheme.surfaceContainerHighest,
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(Icons.info_outline, color: colorScheme.primary),
-                        const SizedBox(width: 12),
-                        Text(
-                          'À propos',
-                          style: textTheme.titleLarge?.copyWith(
-                            fontWeight: FontWeight.bold,
+
+            // Étape 4: Section "À propos"
+            // NOUVEAU: Le Card prendra automatiquement 100% de la largeur
+            // du SingleChildScrollView car il n'est pas contraint.
+            Align(
+              // Utiliser Align pour forcer la Card à prendre 100% de la largeur
+              alignment: Alignment.center,
+              child: Card(
+                elevation: 0,
+                color: colorScheme.surfaceContainerHighest,
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(Icons.info_outline, color: colorScheme.primary),
+                          const SizedBox(width: 12),
+                          Text(
+                            'À propos',
+                            style: textTheme.titleLarge?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      "Passionné par la technologie et les projets créatifs.",
-                      style: textTheme.bodyLarge?.copyWith(
-                        color: colorScheme.onSurfaceVariant,
-                        height: 1.5,
+                        ],
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 16),
+                      Text(
+                        'Passionné par le développement mobile et les technologies innovantes. J\'aime créer des applications qui améliorent la vie des utilisateurs.',
+                        style: textTheme.bodyLarge?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                          height: 1.5,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
           ],
         ),
       ),
+      // Étape 5: Bouton flottant (Identique)
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
+        onPressed: () {
+          debugPrint('Modification du profil');
+        },
         icon: const Icon(Icons.edit),
-        label: const Text('Modifier profil'),
+        label: const Text('Modifier le profil'),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
