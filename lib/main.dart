@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'atelier1.dart';
 import 'atelier5.dart';
+import 'atelier6.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cartManager = CartManager(); // instance globale
+    final cartManager = CartManager(); // instance globale du panier
 
     return AnimatedBuilder(
       animation: cartManager,
@@ -23,11 +24,15 @@ class MyApp extends StatelessWidget {
             useMaterial3: true,
             colorSchemeSeed: Colors.deepPurple,
           ),
-          home: ProfilePageM3(cartManager: cartManager),
+
+          // Page d'accueil (tu peux changer pour ProfilePageM3 ou ProductListPageM3)
+          home: ProductListPageM3(cartManager: cartManager),
+
           routes: {
             '/profile': (context) => ProfilePageM3(cartManager: cartManager),
             '/products':
                 (context) => ProductListPageM3(cartManager: cartManager),
+            '/atelier6': (context) => CartSummaryPage(cartManager: cartManager),
           },
         );
       },

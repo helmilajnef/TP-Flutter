@@ -54,11 +54,14 @@ class CartManager extends ChangeNotifier {
   }
 
   void removeFromCart(int index) {
-    _items.removeAt(index);
-    notifyListeners();
+    if (index >= 0 && index < _items.length) {
+      _items.removeAt(index);
+      notifyListeners();
+    }
   }
 
   void updateQuantity(int index, int quantity) {
+    if (index < 0 || index >= _items.length) return;
     if (quantity > 0) {
       _items[index].quantity = quantity;
     } else {
@@ -74,7 +77,7 @@ class CartManager extends ChangeNotifier {
 }
 
 // ============================
-// Liste Produits
+// Liste Produits (demo)
 // ============================
 final List<Product> demoProducts = const [
   Product(
@@ -138,14 +141,15 @@ class ProductListPageM3 extends StatelessWidget {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.person),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => Navigator.pushNamed(context, '/profile'),
         ),
         actions: [
           Stack(
             children: [
               IconButton(
                 icon: const Icon(Icons.shopping_cart),
-                onPressed: () => _showCartBottomSheet(context),
+                // ← ouvre Atelier 6 connecté au CartManager via la route définie dans main.dart
+                onPressed: () => Navigator.pushNamed(context, '/atelier6'),
               ),
               if (cartManager.totalItems > 0)
                 Positioned(
@@ -185,15 +189,6 @@ class ProductListPageM3 extends StatelessWidget {
               cartManager: cartManager,
             ),
       ),
-    );
-  }
-
-  void _showCartBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (context) => CartBottomSheet(cartManager: cartManager),
     );
   }
 }
@@ -387,7 +382,7 @@ class _ProductCardState extends State<ProductCard>
 }
 
 // ============================
-// Panier Bottom Sheet
+// Panier Bottom Sheet (optionnel)
 // ============================
 class CartBottomSheet extends StatelessWidget {
   final CartManager cartManager;
